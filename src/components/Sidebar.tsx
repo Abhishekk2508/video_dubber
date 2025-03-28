@@ -6,14 +6,14 @@ interface SidebarProps {
   setWidth: React.Dispatch<React.SetStateAction<number>>;
   height: number;
   setHeight: React.Dispatch<React.SetStateAction<number>>;
+  playTime: number;
+  setPlayTime: React.Dispatch<React.SetStateAction<number>>;
   startTime: number;
   setStartTime: React.Dispatch<React.SetStateAction<number>>;
   endTime: number;
   setEndTime: React.Dispatch<React.SetStateAction<number>>;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-  playTime: number;
-  setPlayTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
@@ -22,71 +22,80 @@ const Sidebar: React.FC<SidebarProps> = ({
   setWidth,
   height,
   setHeight,
+  playTime,
+  setPlayTime,
   startTime,
   setStartTime,
   endTime,
   setEndTime,
   isPlaying,
   setIsPlaying,
-  playTime,
-  setPlayTime
 }) => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  };
+
   return (
-    <div className="sidebar p-4 bg-gray-800 text-white w-64 h-full">
-      <h2 className="text-lg font-bold mb-4">Media Controls</h2>
-      
-      {/* Upload Media */}
-      <label className="block mb-2">Upload Media:</label>
-      <input
-        type="file"
-        accept="image/*,video/*"
-        onChange={(e) => setFile(e.target.files ? e.target.files[0] : null)}
-        className="mb-4 w-full p-2 border rounded"
-      />
-      
-      {/* Width Control */}
-      <label className="block mb-2">Width:</label>
-      <input
-        type="number"
-        value={width}
-        onChange={(e) => setWidth(Number(e.target.value))}
-        className="mb-4 w-full p-2 border rounded"
-      />
-      
-      {/* Height Control */}
-      <label className="block mb-2">Height:</label>
-      <input
-        type="number"
-        value={height}
-        onChange={(e) => setHeight(Number(e.target.value))}
-        className="mb-4 w-full p-2 border rounded"
-      />
-      
-      {/* Start Time Control */}
-      <label className="block mb-2">Start Time (seconds):</label>
-      <input
-        type="number"
-        value={startTime}
-        onChange={(e) => setStartTime(Number(e.target.value))}
-        className="mb-4 w-full p-2 border rounded"
-      />
-      
-      {/* End Time Control */}
-      <label className="block mb-2">End Time (seconds):</label>
-      <input
-        type="number"
-        value={endTime}
-        onChange={(e) => setEndTime(Number(e.target.value))}
-        className="mb-4 w-full p-2 border rounded"
-      />
-      
-      {/* Play/Pause Button */}
-      <button
-        onClick={() => setIsPlaying(!isPlaying)}
-        className="w-full p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        {isPlaying ? "Pause" : "Play"}
-      </button>
+    <div className="w-1/4 p-4 bg-gray-800 text-white">
+      <h2 className="text-xl font-semibold">Sidebar</h2>
+      <input type="file" onChange={handleFileChange} />
+      <div className="mt-4">
+        <label>Width:</label>
+        <input
+          type="number"
+          value={width}
+          onChange={(e) => setWidth(Number(e.target.value))}
+          className="border p-1 mx-2"
+        />
+      </div>
+      <div className="mt-4">
+        <label>Height:</label>
+        <input
+          type="number"
+          value={height}
+          onChange={(e) => setHeight(Number(e.target.value))}
+          className="border p-1 mx-2"
+        />
+      </div>
+
+      <div className="mt-4">
+        <label>Start Time:</label>
+        <input
+          type="number"
+          value={startTime}
+          onChange={(e) => setStartTime(Number(e.target.value))}
+          className="border p-1 mx-2"
+        />
+      </div>
+
+      <div className="mt-4">
+        <label>End Time:</label>
+        <input
+          type="number"
+          value={endTime}
+          onChange={(e) => setEndTime(Number(e.target.value))}
+          className="border p-1 mx-2"
+        />
+      </div>
+
+      <div className="mt-4">
+        <button
+          onClick={handlePlayPause}
+          className="bg-blue-500 px-4 py-2 text-white rounded"
+        >
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+      </div>
+
+      <div className="mt-4">
+        <p>Play Time: {playTime.toFixed(2)} sec</p>
+      </div>
     </div>
   );
 };
