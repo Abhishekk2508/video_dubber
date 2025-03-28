@@ -1,8 +1,27 @@
-/* Import Tailwind's base styles */
-@tailwind base;
-
-/* Import Tailwind's component styles */
-@tailwind components;
-
-/* Import Tailwind's utility classes */
-@tailwind utilities;
+/* src/styles/global.css */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+  }
+  
+  .app-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    width: 250px;
+    padding: 20px;
+    background: #f4f4f4;
+  }
+  
+  .canvas {
+    flex: 1;
+    position: relative;
+    background: #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
